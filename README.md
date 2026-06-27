@@ -521,4 +521,77 @@
 
         function comparePrograms() {
             const id1 = document.getElementById('comp1').value;
-            const id2 = document.getElementById('
+            const id2 = document.getElementById('comp2').value;
+            const p1 = programsData.find(p => p.id === id1);
+            const p2 = programsData.find(p => p.id === id2);
+
+            const resDiv = document.getElementById('compare-result');
+            resDiv.innerHTML = `
+                <table class="glass">
+                    <thead>
+                        <tr>
+                            <th>หัวข้อ</th>
+                            <th>${p1.name}</th>
+                            <th>${p2.name}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ระดับชั้น</strong></td>
+                            <td>${p1.level}</td>
+                            <td>${p2.level}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>จุดเน้นหลัก</strong></td>
+                            <td>${p1.focus}</td>
+                            <td>${p2.focus}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>วิชาหลัก</strong></td>
+                            <td>${p1.subjects.join(', ')}</td>
+                            <td>${p2.subjects.join(', ')}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>อาชีพในอนาคต</strong></td>
+                            <td>${p1.careers.join('<br>')}</td>
+                            <td>${p2.careers.join('<br>')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // --- Feature: Admin Mockup ---
+        function addProgramMock() {
+            const name = document.getElementById('adminName').value;
+            const focus = document.getElementById('adminFocus').value;
+            if(!name || !focus) {
+                alert("กรุณากรอกข้อมูลให้ครบ");
+                return;
+            }
+            
+            programsData.push({
+                id: 'new_' + Date.now(),
+                name: name,
+                level: 'ทั่วไป',
+                focus: focus,
+                subjects: ['วิชาทั่วไป'],
+                careers: ['อาชีพอิสระ'],
+                desc: 'แผนการเรียนใหม่ (จำลอง)'
+            });
+
+            document.getElementById('adminStatus').innerText = "✅ เพิ่มข้อมูลสำเร็จ! ลองกลับไปดูหน้า 'ข้อมูลห้องเรียน' หรือ 'เปรียบเทียบ'";
+            document.getElementById('adminName').value = '';
+            document.getElementById('adminFocus').value = '';
+            
+            renderPrograms();
+        }
+
+        // --- Initialization ---
+        window.onload = () => {
+            renderPrograms();
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
